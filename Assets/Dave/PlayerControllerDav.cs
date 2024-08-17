@@ -6,11 +6,14 @@ public class PlayerControllerDav : MonoBehaviour
 {
 
     private Rigidbody2D rigid;
+    private BoxCollider2D coll;
 
     [SerializeField] private float speed = 10f;
     [SerializeField] private float jump = 10f;
     [SerializeField] private float dash = 10f;
+    [SerializeField] private float ddelta;
 
+    [SerializeField] private LayerMask groundLayer;
 
     private bool canDash = true;
     private bool dashing = false;
@@ -26,13 +29,31 @@ public class PlayerControllerDav : MonoBehaviour
     private void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
+        coll = GetComponent<BoxCollider2D>();
     }
 
     private void Update()
     {
+        float dist = coll.bounds.extents.y + ddelta;
+
+        RaycastHit2D hits = Physics2D.Raycast(transform.position - new Vector3((float)0.4, 0, 0), Vector2.down, dist, groundLayer);
+        touchingGround = hits.collider != null;
+        if(!touchingGround)
+        {
+            hits = Physics2D.Raycast(transform.position + new Vector3((float)0.4, 0, 0), Vector2.down, dist, groundLayer);
+            touchingGround = hits.collider != null;
+        }
         if (dashing) return;
 
-        horiz = Input.GetAxis("Horizontal");
+        if (Input.GetKey(KeyCode.A))
+        {
+            horiz = -1;
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            horiz = 1;
+        }
+        else horiz = 0;
 
         rigid.velocity = new Vector2(horiz* speed,rigid.velocity.y);
 
@@ -60,15 +81,6 @@ public class PlayerControllerDav : MonoBehaviour
             StartCoroutine(Dash());
         }
 
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            touchingGround = true;
-        }
-        
     }
 
     private IEnumerator Dash()
