@@ -6,7 +6,6 @@ public class PlayerController : MonoBehaviour
 {
 
     private Rigidbody2D rigid;
-    private TrailRenderer trail;
 
     [SerializeField] private float speed = 10f;
     [SerializeField] private float jump = 10f;
@@ -26,7 +25,6 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        trail = GetComponent<TrailRenderer>();
         rigid = GetComponent<Rigidbody2D>();
     }
 
@@ -80,9 +78,7 @@ public class PlayerController : MonoBehaviour
         float aux = rigid.gravityScale;
         rigid.gravityScale = 0;
         rigid.velocity = new Vector2(transform.localScale.x * dash, 0f);
-        trail.emitting = true;
         yield return new WaitForSeconds(dashTime);
-        trail.emitting = false;
         rigid.gravityScale = aux;
         dashing = false;
         yield return new WaitForSeconds(dashCD);
