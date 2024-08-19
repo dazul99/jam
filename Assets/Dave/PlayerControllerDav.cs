@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerControllerDav : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class PlayerControllerDav : MonoBehaviour
 
     [SerializeField] private LayerMask groundLayer;
 
+    [SerializeField]private float height = 1;
     private bool canDash = true;
     private bool dashing = false;
     private float dashCD = 1f;
@@ -35,12 +37,13 @@ public class PlayerControllerDav : MonoBehaviour
     private void Update()
     {
         float dist = coll.bounds.extents.y + ddelta;
+        Debug.DrawRay(transform.position + new Vector3((float)0.4,0, 0), Vector3.down * dist * height);
 
-        RaycastHit2D hits = Physics2D.Raycast(transform.position - new Vector3((float)0.4, 0, 0), Vector2.down, dist, groundLayer);
+        RaycastHit2D hits = Physics2D.Raycast(transform.position - new Vector3((float)0.4, 0, 0), Vector2.down, dist * height, groundLayer);
         touchingGround = hits.collider != null;
         if(!touchingGround)
         {
-            hits = Physics2D.Raycast(transform.position + new Vector3((float)0.4, 0, 0), Vector2.down, dist, groundLayer);
+            hits = Physics2D.Raycast(transform.position + new Vector3((float)0.4, 0, 0), Vector2.down, dist * height, groundLayer);
             touchingGround = hits.collider != null;
         }
         if (dashing) return;

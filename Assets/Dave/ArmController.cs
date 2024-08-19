@@ -21,8 +21,8 @@ public class ArmController : MonoBehaviour
             transform.localScale = transform.localScale + new Vector3((float)1, 0, 0) * Time.deltaTime;
             transform.localPosition = transform.localPosition + new Vector3((float)0.5, 0, 0) * Time.deltaTime;
         }
-
-        else if (Input.GetKey(KeyCode.Z) && transform.localScale.x > min) 
+        
+        else if (transform.localScale.x > min) 
         {
             hand.transform.localPosition = hand.transform.localPosition - new Vector3((float)1, 0, 0) * Time.deltaTime;
             transform.localScale = transform.localScale - new Vector3((float)1, 0, 0) * Time.deltaTime;

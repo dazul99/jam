@@ -34,28 +34,28 @@ public class Fan : MonoBehaviour
 
     private void Update()
     {
-        Debug.DrawRay(transform.position + new Vector3(0,(float)0.8,0), Vector3.left * length);
+        Debug.DrawRay(transform.position + new Vector3((float)0.51, (float)0.8,0), Vector3.left * length);
         Debug.DrawRay(transform.position, Vector3.left * length);
-        Debug.DrawRay(transform.position - new Vector3(0,(float)0.8, 0), Vector3.left * length);
+        Debug.DrawRay(transform.position - new Vector3((float)-0.51, (float)0.8, 0), Vector3.left * length);
 
         
 
         if (isOn)
         {
             RaycastHit2D hits = Physics2D.Raycast(transform.position + new Vector3(0, (float)0.8, 0), direction, length, playerLayer);
-            //hit = hits.collider != null && hits.collider.gameObject.layer == playerLayer;
             hit = hits.collider != null;
+            //hit = hits.collider != null;
             if (!hit)
             {
                 hits = Physics2D.Raycast(transform.position - new Vector3(0, (float)0.8, 0), direction, length, playerLayer);
-                //hit = hits.collider != null && hits.collider.gameObject.layer == playerLayer;
                 hit = hits.collider != null;
+                //hit = hits.collider != null;
 
                 if (!hit)
                 {
                     hits = Physics2D.Raycast(transform.position, direction, length, playerLayer);
-                    //hit = hits.collider != null && hits.collider.gameObject.layer == playerLayer;
                     hit = hits.collider != null;
+                    //hit = hits.collider != null;
 
                 }
             }
