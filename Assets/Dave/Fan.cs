@@ -43,15 +43,20 @@ public class Fan : MonoBehaviour
         if (isOn)
         {
             RaycastHit2D hits = Physics2D.Raycast(transform.position + new Vector3(0, (float)0.8, 0), direction, length, playerLayer);
+            //hit = hits.collider != null && hits.collider.gameObject.layer == playerLayer;
             hit = hits.collider != null;
             if (!hit)
             {
                 hits = Physics2D.Raycast(transform.position - new Vector3(0, (float)0.8, 0), direction, length, playerLayer);
+                //hit = hits.collider != null && hits.collider.gameObject.layer == playerLayer;
                 hit = hits.collider != null;
+
                 if (!hit)
                 {
                     hits = Physics2D.Raycast(transform.position, direction, length, playerLayer);
+                    //hit = hits.collider != null && hits.collider.gameObject.layer == playerLayer;
                     hit = hits.collider != null;
+
                 }
             }
             if(hit)
